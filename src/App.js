@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Fragment, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import NotFound from './pages/NotFound/NotFound';
+import Register from './pages/Register/Register';
+import { setNavigateAction } from './redux/actions/NavigateActions';
+import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
+import UserTemplate from './templates/UserTemplate/UserTemplate';
+
 
 function App() {
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setNavigateAction(navigate))
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Routes>
+        <Route path='/' element={<UserTemplate Component={Login} />} />
+        <Route path='/login' element={<UserTemplate Component={Login} />} />
+        <Route path='/register' element={<UserTemplate Component={Register} />} />
+        <Route path='/home' element={<HomeTemplate Component={Home} />} />
+        <Route path='*' element={<HomeTemplate Component={NotFound} />} />
+      </Routes>
+    </Fragment>
   );
 }
 
