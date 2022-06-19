@@ -8,7 +8,7 @@ import CompanyManagement from './pages/Home/CompanyHome/CompanyManagement';
 import CompanyProfile from './pages/Home/CompanyHome/CompanyProfile';
 import CompanyRecruitment from './pages/Home/CompanyHome/CompanyRecruitment';
 import CompanyRequest from './pages/Home/CompanyHome/CompanyRequest';
-import Home from './pages/Home/Home';
+import UserHome from './pages/Home/UserHome/UserHome';
 import UserProfile from './pages/Home/UserHome/UserProfile';
 import UserRequest from './pages/Home/UserHome/UserRequest';
 import Login from './pages/Login/Login';
@@ -39,7 +39,7 @@ function App() {
         <Route path='/register' element={<UserTemplate Component={Register} />} />
 
         {/*User*/}
-        <Route path='/userhome' element={<HomeTemplate Component={Home} />} />
+        <Route path='/userhome' element={<HomeTemplate Component={UserHome} />} />
         <Route path='/userprofile' element={<HomeTemplate Component={UserProfile} />} />
         <Route path='/userrequest' element={<HomeTemplate Component={UserRequest} />} />
 
