@@ -2,20 +2,23 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export default function Register() {
+
+  const { navigate } = useSelector(state => state.NavigateReducer)
+
   const dispatch = useDispatch();
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
       username: "",
       password: "",
       passwordConfirmation: "",
-      name: "",
-      email: "",
-      phoneNumber: ""
+      domain: "user",
+      name: ""
     },
     validationSchema: Yup.object({
       username: Yup.string()
@@ -23,24 +26,15 @@ export default function Register() {
         .min(8, 'Username must contain at least 8 characters!')
         .max(50, 'Username must contain at most 8 characters!'),
       password: Yup.string()
-        .required('Required!')
-        .min(8, 'Password must contain at least 8 characters!')
-        .max(50, 'Password must contain at most 50 characters!!')
-        .matches(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,50}$/, "Password must be a mix of letters, numbers and special characters"),
+        .required('Required!'),
       passwordConfirmation: Yup.string()
         .required('Required!')
         .oneOf([Yup.ref('password'), null], 'Password must match'),
+      domain: Yup.string()
+        .required('Required!'),
       name: Yup.string()
         .required('Required!')
-        .max(50, 'Name must contain at most 50 characters!!'),
-      email: Yup.string()
-        .required('Required!')
-        .email('Invalid email!'),
-      phoneNumber: Yup.string()
-        .required('Required!')
-        .min(8, 'Phone number must have exactly 8 numbers!')
-        .max(8, 'Phone number must have exactly 8 numbers!')
-        .matches(/(6|8|9)\d{7}/g, "Phone number must be a Singapore phone number"),
+        .max(50, 'Name must contain at most 50 characters!!')
     }),
     onSubmit: (values) => {
       console.log(values)
@@ -48,74 +42,52 @@ export default function Register() {
   })
 
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col text-black" onSubmit={formik.handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
-          Username<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="username" id="username" type="text" placeholder="Username" />
-        {formik.touched.username && formik.errors.username ? (
-          <div className="text-red-900">{formik.errors.username}</div>
-        ) : null}
-      </div>
-      <div className="mb-2">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
-          Password<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="password" id="password" type="password" placeholder="******************" />
-        {formik.touched.password && formik.errors.password ? (
-          <div className="text-red-900">{formik.errors.password}</div>
-        ) : null}
-      </div>
-      <div className="mb-2">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="passwordConfirmation">
-          Password confirmation<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.passwordConfirmation} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="passwordConfirmation" id="passwordConfirmation" type="password" placeholder="******************" />
-        {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (
-          <div className="text-red-900">{formik.errors.passwordConfirmation}</div>
-        ) : null}
-      </div>
-      <div className="mb-2">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="name">
-          Name<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="name" id="name" type="text" placeholder="Name" />
-        {formik.touched.name && formik.errors.name ? (
-          <div className="text-red-900">{formik.errors.name}</div>
-        ) : null}
-      </div>
-      <div className="mb-2">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="email">
-          Email<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.email} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="email" id="email" type="text" placeholder="Email" />
-        {formik.touched.email && formik.errors.email ? (
-          <div className="text-red-900">{formik.errors.email}</div>
-        ) : null}
-      </div>
-      <div className="mb-2">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="phoneNumber">
-          Phone number<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.phoneNumber} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="phoneNumber" id="phoneNumber" type="text" placeholder="Phone number" />
-        {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
-          <div className="text-red-900">{formik.errors.phoneNumber}</div>
-        ) : null}
-      </div>
-      <div className="flex items-center justify-between mb-6">
-        <button className="bg-orange-500 text-white font-bold py-2 px-6 rounded mr-3" type="submit">
-          Register
-        </button>
-        <button className="bg-black text-white font-bold py-2 px-6 rounded" type="button">
-          <Link to="/" className="text-white inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#">
-            Back to login
-          </Link>
-        </button>
-      </div>
-      <div className="flex justify-center items-center text-2xl font-bold">
-        <Link to="/home" href="">Continue without register</Link>
-      </div>
-    </form>
+    <form onSubmit={formik.handleSubmit}>
+      <h1 className="pt-3 text-6xl font-mono font-bold text-center text-yellow-500">SIGN UP TO <i>1235!</i></h1>
+      <section className="text-gray-600 body-font">
+        <div className="container mx-auto flex flex-col px-5 pt-8 justify-center items-center">
+          <div className="lg:w-2/5 bg-gray-100 rounded-lg p-8 flex flex-col place-self-center">
+            {/* Sign Up */}
+            <div className="relative mb-4">
+              <label htmlFor="username" className="leading-6 text-sm text-gray-600">Username</label>
+              <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} type="username" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              {formik.touched.username && formik.errors.username ? (<div className="text-red-900"> {formik.errors.username}</div>) : null}
+            </div>
+            <div className="relative mb-4">
+              <label htmlFor="password" className="leading-6 text-sm text-gray-600">Password</label>
+              <input onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur} type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              {formik.touched.password && formik.errors.password ? (<div className="text-red-900"> {formik.errors.password}</div>) : null}
+            </div>
+            <div className="relative mb-4">
+              <label htmlFor="passwordConfirmation" className="leading-6 text-sm text-gray-600">Password Confirmation</label>
+              <input onChange={formik.handleChange} value={formik.values.passwordConfirmation} onBlur={formik.handleBlur} type="password" id="passwordConfirmation" name="passwordConfirmation" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (<div className="text-red-900"> {formik.errors.passwordConfirmation}</div>) : null}
+            </div>
+            <div className="relative mb-4">
+              <label htmlFor="domain" className="leading-6 text-sm text-gray-600">Domain</label>
+              <select onChange={formik.handleChange} value={formik.values.domain} onBlur={formik.handleBlur} name="domain" id="domain" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <option value="user">User</option>
+                <option value="company">Company</option>
+              </select>
+              {formik.touched.domain && formik.errors.domain ? (<div className="text-red-900"> {formik.errors.domain}</div>) : null}
+            </div>
+            <div className="relative mb-4">
+              <label htmlFor="name" className="leading-6 text-sm text-gray-600">Name</label>
+              <input onChange={formik.handleChange} value={formik.values.name} onBlur={formik.handleBlur} type="name" id="name" name="name" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              {formik.touched.name && formik.errors.name ? (<div className="text-red-900"> {formik.errors.name}</div>) : null}
+            </div>
+            <button className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg" type="submit">Sign up</button>
+            {/*Back To Log in*/}
+            <p className="text-xs text-gray-500 mt-3 mb-2 text-center"><i>Already have an account?</i></p>
+            <div />
+            <button onClick={() => {
+              navigate("/login", { replace: false })
+            }} className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 rounded text-lg" type="button">
+              Back to Log In
+            </button>
+          </div>
+        </div>
+      </section>
+    </form >
   )
 }

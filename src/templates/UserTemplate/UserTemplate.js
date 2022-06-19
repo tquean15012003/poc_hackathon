@@ -9,8 +9,8 @@ export default function UserTemplate(props) {
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'
-        }}>
-            <div className="bg-black/20 w-screen h-screen text-white flex justify-center items-center">
+        }} className="w-screen h-screen">
+            <div className="bg-black/20 w-screen h-screen">
                 <Component />
             </div>
         </div>

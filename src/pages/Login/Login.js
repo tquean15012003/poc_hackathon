@@ -5,21 +5,26 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Login() {
+
+  const { navigate } = useSelector(state => state.NavigateReducer)
 
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: ""
+      password: "",
+      domain: "user",
     },
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required!'),
       password: Yup.string()
+        .required('Required!'),
+      domain: Yup.string()
         .required('Required!')
     }),
     onSubmit: (values) => {
@@ -31,35 +36,46 @@ export default function Login() {
   }, [])
 
   return (
-    <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col text-black" onSubmit={formik.handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="username">
-          Username<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker" name="username" id="username" type="text" placeholder="Username" />
-        {formik.touched.username && formik.errors.username ? (
-          <div className="text-red-900">{formik.errors.username}</div>
-        ) : null}
+    <>
+      <div>
+        <h1 className="pt-3 text-6xl font-mono font-bold text-center text-yellow-500">WELCOME TO <i>1235!</i></h1>
+        <section className="text-gray-600 body-font">
+          <div className="container mx-auto flex flex-col px-5 pt-24 justify-center items-center">
+            <div className="lg:w-2/5 bg-gray-100 rounded-lg p-8 flex flex-col place-self-center">
+              {/* Log In */}
+              <div className="relative mb-4">
+                <label htmlFor="username" className="leading-6 text-sm text-gray-600">Username</label>
+                <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} type="email" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                {formik.touched.username && formik.errors.username ? (<div className="text-red-900"> {formik.errors.username}</div>) : null}
+              </div>
+              <div className="relative mb-4">
+                <label htmlFor="password" className="leading-6 text-sm text-gray-600">Password</label>
+                <input onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur} type="password" id="password" name="password" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                {formik.touched.password && formik.errors.password ? (<div className="text-red-900"> {formik.errors.password}</div>) : null}
+              </div>
+              <div className="relative mb-4">
+                <label htmlFor="domain" className="leading-6 text-sm text-gray-600">Domain</label>
+                <select onChange={formik.handleChange} value={formik.values.domain} onBlur={formik.handleBlur} name="domain" id="domain" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                  <option value="user">User</option>
+                  <option value="company">Company</option>
+                  <option value="admin">Admin</option>
+                </select>
+                {formik.touched.domain && formik.errors.domain ? (<div className="text-red-900"> {formik.errors.domain}</div>) : null}
+              </div>
+              <button className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">Log In</button>
+              {/* Sign up */}
+              <p className="text-xs text-gray-500 mt-3 mb-2 text-center"><i>Not registered?</i></p>
+              <div />
+              <button onClick={() => {
+                navigate("/register", { replace: false })
+              }} className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 rounded text-lg" type="button">
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </section>
       </div>
-      <div className="mb-6">
-        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="password">
-          Password<span className="text-red-900">&#42;</span>
-        </label>
-        <input onChange={formik.handleChange} value={formik.values.password} onBlur={formik.handleBlur} className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3" name="password" id="password" type="password" placeholder="******************" />
-        {formik.touched.password && formik.errors.password ? (
-          <div className="text-red-900">{formik.errors.password}</div>
-        ) : null}
-      </div>
-      <div className="flex items-center justify-between mb-2">
-        <button className="bg-orange-500 text-white font-bold py-2 px-6 rounded mr-3" type="submit">
-          Sign In
-        </button>
-        <button className="bg-black text-white font-bold py-2 px-6 rounded" type="button">
-          <Link to="/register" className="text-white inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker" href="#">
-            Create account
-          </Link>
-        </button>
-      </div>
-    </form>
+
+    </>
   )
 }
