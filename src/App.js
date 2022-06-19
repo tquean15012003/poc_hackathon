@@ -18,6 +18,8 @@ import { setNavigateAction } from './redux/actions/NavigateActions';
 import CompanyHomeTemplate from './templates/CompanyHomeTemplate/CompanyHomeTemplate';
 import HomeTemplate from './templates/HomeTemplate/HomeTemplate';
 import UserTemplate from './templates/UserTemplate/UserTemplate';
+import AdminHomeTemplate from './templates/AdminHomeTemplate/AdminHomeTemplate';
+import AdminHome from './pages/Home/AdminHome/AdminHome';
 
 
 function App() {
@@ -44,11 +46,14 @@ function App() {
         <Route path='/userrequest' element={<HomeTemplate Component={UserRequest} />} />
 
         {/*Company*/}
-        <Route path='/companyhome' element={<CompanyHomeTemplate Component={CompanyHome}/>} />
-        <Route path='/companymanagement' element={<CompanyHomeTemplate Component={CompanyManagement}/>} />
-        <Route path='/companyrecruitment' element={<CompanyHomeTemplate Component={CompanyRecruitment}/>} />
-        <Route path='/companyrequest' element={<CompanyHomeTemplate Component={CompanyRequest}/>} />
-        <Route path='/companyprofile' element={<CompanyHomeTemplate Component={CompanyProfile}/>} />
+        <Route path='/companyhome' element={<CompanyHomeTemplate Component={CompanyHome} />} />
+        <Route path='/companymanagement' element={<CompanyHomeTemplate Component={CompanyManagement} />} />
+        <Route path='/companyrecruitment' element={<CompanyHomeTemplate Component={CompanyRecruitment} />} />
+        <Route path='/companyrequest' element={<CompanyHomeTemplate Component={CompanyRequest} />} />
+        <Route path='/companyprofile' element={<CompanyHomeTemplate Component={CompanyProfile} />} />
+
+        {/*Admin*/}
+        <Route path='/adminhome' element={<AdminHomeTemplate Component={AdminHome} />} />
 
         {/*Not found*/}
         <Route path='*' element={<HomeTemplate Component={NotFound} />} />
