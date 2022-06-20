@@ -10,6 +10,8 @@ export default function UserInfo() {
 
     const dispatch = useDispatch()
 
+    console.log(userInfo)
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
@@ -83,7 +85,7 @@ export default function UserInfo() {
                     <div className="py-8 flex flex-wrap md:flex-nowrap">
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">Basic Information</span>
-                            <span className="text-sm text-green-500">Verified</span>
+                            {userInfo.isverified === "true" ? <span className="text-sm text-green-500">Verified</span> : <button type="button" className="mt-2 w-1/2 inline-block px-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Get verified</button>}
                         </div>
                         <div className="md:flex-grow">
                             <div className="mb-2">
