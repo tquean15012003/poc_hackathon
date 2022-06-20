@@ -11,7 +11,7 @@ export default function UserHome() {
                     <div className="container px-5 py-5 mx-auto mt-10" key={index}>
                         <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
                             <div className="w-3/5 sm:text-left text-center ml-20 mt-6 sm:mt-0">
-                                <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Junior Software Engineer, Goggles</h2>
+                                <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Junior Software Engineer, Gookgle</h2>
                                 <p className="leading-relaxed text-base"><ul>
                                     <li>Description: Develop software using AI</li>
                                     <li>Skills: C++, Java, Python</li>

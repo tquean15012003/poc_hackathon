@@ -28,7 +28,7 @@ export default function CompanyHome() {
                                 <path d="M8 17l4 4 4-4m-4-5v9" />
                                 <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29" />
                             </svg>
-                            <h2 className="title-font font-medium text-3xl text-gray-900">1.3K</h2>
+                            <h2 className="title-font font-medium text-3xl text-gray-900">4</h2>
                             <p className="leading-relaxed">Job Posts</p>
                         </div>
                     </div>

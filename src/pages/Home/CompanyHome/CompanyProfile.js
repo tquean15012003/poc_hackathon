@@ -66,7 +66,7 @@ export default function CompanyProfile() {
                 </div>
                 <div className="mb-2">
                   <h3 className="text-xl font-medium text-gray-900 title-font mb-2">Website</h3>
-                  <a className="text-blue-500 inline-flex items-center">google.com</a>
+                  <a className="text-blue-500 inline-flex items-center">gookgle.com</a>
                 </div>
                 <div className="mb-2">
                   <h3 className="text-xl font-medium text-gray-900 title-font mb-2">Location</h3>
