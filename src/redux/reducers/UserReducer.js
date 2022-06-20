@@ -1,4 +1,4 @@
-import { SET_USER, SET_USER_INFO } from "../consts/UserConsts";
+import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, SET_USER, SET_USER_INFO } from "../consts/UserConsts";
 
 const stateDefault = {
     user: {
@@ -9,7 +9,9 @@ const stateDefault = {
     userEducation: [],
     userExperience: [],
     did: "",
-    accessToken: ""
+    accessToken: "",
+    companyList: [],
+    adminList: []
 };
 
 export const UserReducer = (state = stateDefault, action) => {
@@ -23,6 +25,26 @@ export const UserReducer = (state = stateDefault, action) => {
         case SET_USER_INFO: {
             state.userInfo = action.userInfo
             return { ...state }
+        }
+        case ADD_USER_EDUCATION: {
+            const index = state.userEducation.findIndex(education => education.id === action.education.id)
+            if (index === -1) {
+                state.userEducation.push(action.education)
+            }
+            return { ...state }
+        }
+        case DELETE_EDUCATION: {
+            const newUserEducation = state.userEducation.filter(education => education.id !== action.educationID)
+            state.userEducation = newUserEducation;
+            return {...state}
+        }
+        case GET_COMPANY_LIST: {
+            state.companyList = action.companyList
+            return {...state}
+        }
+        case GET_ADMIN_LIST: {
+            state.adminList = action.adminList
+            return {...state}
         }
         default: return { ...state };
     };

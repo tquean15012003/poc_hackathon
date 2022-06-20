@@ -81,7 +81,7 @@ export default function UserExperience() {
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">Undergraduate Researcher</span>
                             <span className="text-gray-700">Aug 2021 — Present</span>
-                            <span className="text-sm text-green-500">Verified</span>
+                            <span className="text-sm text-yellow-500">Pending review</span>
                         </div>
                         <div className="md:flex-grow">
                             <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">NTU-NLP Research Group</h2>

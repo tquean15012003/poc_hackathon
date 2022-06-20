@@ -6,11 +6,9 @@ import { updateUserInfoAction } from '../../../../redux/actions/UserActions';
 
 export default function UserInfo() {
 
-    const { user, userInfo } = useSelector(state => state.UserReducer)
+    const { user, userInfo, adminList } = useSelector(state => state.UserReducer)
 
     const dispatch = useDispatch()
-
-    console.log(userInfo)
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -18,6 +16,7 @@ export default function UserInfo() {
             name: user.name,
             contact: "",
             location: "",
+            issuer: adminList[0]?.username,
         },
         validationSchema: Yup.object({
             name: Yup.string()
@@ -25,6 +24,8 @@ export default function UserInfo() {
             contact: Yup.string()
                 .required('Required!'),
             location: Yup.string()
+                .required('Required!'),
+            issuer: Yup.string()
                 .required('Required!')
         }),
         onSubmit: (values) => {
@@ -69,6 +70,17 @@ export default function UserInfo() {
                             <input onChange={formik.handleChange} value={formik.values.location} onBlur={formik.handleBlur} type="text" id="location" name="location" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                             {formik.touched.location && formik.errors.location ? (<div className="text-red-900"> {formik.errors.location}</div>) : null}
                         </div>
+                        <div className="relative mb-4 px-3">
+                            <label htmlFor="issuer" className="leading-7 text-sm text-gray-600">Issuer (admin)</label>
+                            <select onChange={formik.handleChange} value={formik.values.issuer} onBlur={formik.handleBlur} name="issuer" id="issuer" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                {adminList.map((admin, index) => {
+                                    return (
+                                        <option value={admin.username} key={index}>{admin.name}</option>
+                                    )
+                                })}
+                            </select>
+                            {formik.touched.issuer && formik.errors.issuer ? (<div className="text-red-900"> {formik.errors.issuer}</div>) : null}
+                        </div>
                         <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
                             <button type="button" className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-dismiss="modal">
                                 Close
@@ -85,12 +97,12 @@ export default function UserInfo() {
                     <div className="py-8 flex flex-wrap md:flex-nowrap">
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">Basic Information</span>
-                            {userInfo.isverified === "true" ? <span className="text-sm text-green-500">Verified</span> : <button type="button" className="mt-2 w-1/2 inline-block px-2 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Get verified</button>}
+                            {userInfo.isverified === "true" ? <span className="text-sm text-green-500">Verified</span> : <span className="text-sm text-yellow-500">Pending review</span>}
                         </div>
                         <div className="md:flex-grow">
                             <div className="mb-2">
                                 <h3 className="text-xl font-medium text-gray-900 title-font mb-2">Name</h3>
-                                <p className="leading-relaxed">{user.name}</p>
+                                <p className="leading-relaxed">{(typeof userInfo.name === "undefined") ? `${user.name}` : `${userInfo?.name}`}</p>
                             </div>
                             <div className="mb-2">
                                 <h3 className="text-xl font-medium text-gray-900 title-font mb-2">Contact</h3>

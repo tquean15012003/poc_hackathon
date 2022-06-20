@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getUserInfoAction } from '../../../redux/actions/UserActions'
+import { getAdminListAction, getCompanyListAction, getEducationAction, getUserInfoAction } from '../../../redux/actions/UserActions'
 import UserEducation from './UserProfileComponent/UserEducation'
 import UserExperience from './UserProfileComponent/UserExperience'
 import UserInfo from './UserProfileComponent/UserInfo'
@@ -16,7 +16,10 @@ export default function UserProfile() {
     const { id } = useParams();
 
     useEffect(() => {
-        dispatch(getUserInfoAction(id))
+        dispatch(getUserInfoAction(id)) 
+        dispatch(getEducationAction(id)) 
+        dispatch(getCompanyListAction())
+        dispatch(getAdminListAction());
     }, [])
 
     return (

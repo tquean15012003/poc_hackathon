@@ -1,3 +1,11 @@
 export const SET_USER = "SET_USER"
 
 export const SET_USER_INFO = "SET_USER_INFO"
+
+export const ADD_USER_EDUCATION = "ADD_USER_EDUCATION"
+
+export const DELETE_EDUCATION = "DELETE_EDUCATION"
+
+export const GET_COMPANY_LIST = "GET_COMPANY_LIST"
+
+export const GET_ADMIN_LIST = "GET_ADMIN_LIST"

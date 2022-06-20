@@ -65,7 +65,7 @@ export default function UserSkill() {
                         <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                             <h5 className="text-gray-900 text-lg leading-tight font-medium mb-2">Python</h5>
                             <p className="text-gray-700 text-sm mb-4">
-                                Level 3 (verified)
+                                Level 3 (<span className="text-sm text-green-500">Verified</span>)
                             </p>
                             <button type="button" className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
                         </div>
@@ -74,7 +74,7 @@ export default function UserSkill() {
                         <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                             <h5 className="text-gray-900 text-lg leading-tight font-medium mb-2">C++</h5>
                             <p className="text-gray-700 text-sm mb-4">
-                                Level 2 (verified)
+                                Level 2 (<span className="text-sm text-green-500">Verified</span>)
                             </p>
                             <button type="button" className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
                         </div>
@@ -83,7 +83,7 @@ export default function UserSkill() {
                         <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                             <h5 className="text-gray-900 text-lg leading-tight font-medium mb-2">Java</h5>
                             <p className="text-gray-700 text-sm mb-4">
-                                Level 4 (not verified)
+                                Level 4 (<span className="text-sm text-yellow-500">Pending review</span>)
                             </p>
                             <button type="button" className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
                         </div>
@@ -92,7 +92,7 @@ export default function UserSkill() {
                         <div className="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
                             <h5 className="text-gray-900 text-lg leading-tight font-medium mb-2">Business Administrator</h5>
                             <p className="text-gray-700 text-sm mb-4">
-                                Level 1 (verified)
+                                Level 1 (<span className="text-sm text-green-500">Verified</span>)
                             </p>
                             <button type="button" className=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Edit</button>
                         </div>

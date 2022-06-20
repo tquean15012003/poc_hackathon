@@ -16,6 +16,33 @@ export class UserService extends baseService {
     updateUserInfoService = (id, userInfo) => {
         return this.put(`userinfos/${id}`, userInfo)
     }
+    createUserEducationService = (education) => {
+        return this.post('educations', education)
+    }
+    createEducationUserService = (educationUser) => {
+        return this.post('educationusers', educationUser)
+    }
+    getEducationUserDetailByUserIDService = (id) => {
+        return this.get(`educationusers/byuserid/${id}`)
+    }
+    getEducationService = (id) => {
+        return this.get(`educations/${id}`)
+    }
+    deleteEducationService = (id) => {
+        return this.delete(`educations/${id}`)
+    }
+    getEducationUserByEducationIDService = (id) => {
+        return this.get(`educationusers/byeducationid/${id}`)
+    }
+    deleteEducationUserService = (id) => {
+        return this.delete(`educationusers/${id}`)
+    }
+    getCompanyListService = () => {
+        return this.get("users/getcompanylist")
+    }
+    getAdminListService = () => {
+        return this.get("users/getadminlist")
+    }
 }
 
 export const userService = new UserService()
