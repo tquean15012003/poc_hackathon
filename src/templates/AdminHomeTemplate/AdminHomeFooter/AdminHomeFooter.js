@@ -11,7 +11,7 @@ export default function Homefooter() {
         <footer className="dark:text-gray-50">
             <div className="flex flex-col py-4 mx-auto px-16 lg:flex-row divide-gray-400">
                 <p className="mb-0 self-center py-6 space-y-4 text-center sm:flex sm:space-y-0 sm:justify-around sm:space-x-4 lg:flex-1 lg:justify-start">
-                    <span onClick={() => { navigate("/userhome", { replace: false }) }} className="text-3xl text-indigo-500 cursor-pointer font-semibold tracking-tight "><i>1235!</i></span>
+                    <span onClick={() => { navigate("/adminhome", { replace: false }) }} className="text-3xl text-indigo-500 cursor-pointer font-semibold tracking-tight "><i>1235!</i></span>
                 </p>
                 <div className="flex flex-col justify-center lg:pt-0">
                     <div className="flex justify-center space-x-4">
@@ -47,7 +47,7 @@ export default function Homefooter() {
             <hr className="text-indigo-500 bg-indigo-500 border-0 h-1" />
             <div className="flex flex-col py-2 mx-auto md:py-4 px-6 lg:flex-row lg:justify-center lg:items-center divide-gray-400">
                 <div className="flex self-center text-sm text-center md:block md:space-x-6">
-                    <p className="mb-0 text-base text-indigo-500"><span><Link className="text-white" target="_blank" to="/userhome" rel="noreferrer"><span className="font-bold text-indigo-600"><i>1235!</i></span></Link></span> All rights reserved</p>
+                    <p className="mb-0 text-base text-indigo-500"><span><Link className="text-white" target="_blank" to="/adminhome" rel="noreferrer"><span className="font-bold text-indigo-600"><i>1235!</i></span></Link></span> All rights reserved</p>
                 </div>
             </div>
         </footer>

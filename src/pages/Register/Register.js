@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signUpAction } from '../../redux/actions/LogInAction';
 
 export default function Register() {
 
@@ -17,27 +18,26 @@ export default function Register() {
       username: "",
       password: "",
       passwordConfirmation: "",
-      domain: "user",
+      type: "user",
       name: ""
     },
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required!')
-        .min(8, 'Username must contain at least 8 characters!')
         .max(50, 'Username must contain at most 8 characters!'),
       password: Yup.string()
         .required('Required!'),
       passwordConfirmation: Yup.string()
         .required('Required!')
         .oneOf([Yup.ref('password'), null], 'Password must match'),
-      domain: Yup.string()
+      type: Yup.string()
         .required('Required!'),
       name: Yup.string()
         .required('Required!')
         .max(50, 'Name must contain at most 50 characters!!')
     }),
     onSubmit: (values) => {
-      console.log(values)
+      dispatch(signUpAction(values))
     }
   })
 
@@ -64,12 +64,12 @@ export default function Register() {
               {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation ? (<div className="text-red-900"> {formik.errors.passwordConfirmation}</div>) : null}
             </div>
             <div className="relative mb-4">
-              <label htmlFor="domain" className="leading-6 text-sm text-gray-600">Domain</label>
-              <select onChange={formik.handleChange} value={formik.values.domain} onBlur={formik.handleBlur} name="domain" id="domain" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+              <label htmlFor="type" className="leading-6 text-sm text-gray-600">Domain</label>
+              <select onChange={formik.handleChange} value={formik.values.type} onBlur={formik.handleBlur} name="type" id="type" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                 <option value="user">User</option>
                 <option value="company">Company</option>
               </select>
-              {formik.touched.domain && formik.errors.domain ? (<div className="text-red-900"> {formik.errors.domain}</div>) : null}
+              {formik.touched.type && formik.errors.type ? (<div className="text-red-900"> {formik.errors.type}</div>) : null}
             </div>
             <div className="relative mb-4">
               <label htmlFor="name" className="leading-6 text-sm text-gray-600">Name</label>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { logInInAction } from '../../redux/actions/LogInAction';
 
 export default function Login() {
 
@@ -17,18 +18,18 @@ export default function Login() {
     initialValues: {
       username: "",
       password: "",
-      domain: "user",
+      type: "user",
     },
     validationSchema: Yup.object({
       username: Yup.string()
         .required('Required!'),
       password: Yup.string()
         .required('Required!'),
-      domain: Yup.string()
+      type: Yup.string()
         .required('Required!')
     }),
     onSubmit: (values) => {
-      console.log(values)
+      dispatch(logInInAction(values))
     }
   })
 
@@ -36,8 +37,7 @@ export default function Login() {
   }, [])
 
   return (
-    <>
-      <div>
+      <form onSubmit={formik.handleSubmit}>
         <h1 className="pt-3 text-6xl font-mono font-bold text-center text-yellow-500">WELCOME TO <i>1235!</i></h1>
         <section className="text-gray-600 body-font">
           <div className="container mx-auto flex flex-col px-5 pt-24 justify-center items-center">
@@ -45,7 +45,7 @@ export default function Login() {
               {/* Log In */}
               <div className="relative mb-4">
                 <label htmlFor="username" className="leading-6 text-sm text-gray-600">Username</label>
-                <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} type="email" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                <input onChange={formik.handleChange} value={formik.values.username} onBlur={formik.handleBlur} type="username" id="username" name="username" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 {formik.touched.username && formik.errors.username ? (<div className="text-red-900"> {formik.errors.username}</div>) : null}
               </div>
               <div className="relative mb-4">
@@ -54,15 +54,15 @@ export default function Login() {
                 {formik.touched.password && formik.errors.password ? (<div className="text-red-900"> {formik.errors.password}</div>) : null}
               </div>
               <div className="relative mb-4">
-                <label htmlFor="domain" className="leading-6 text-sm text-gray-600">Domain</label>
-                <select onChange={formik.handleChange} value={formik.values.domain} onBlur={formik.handleBlur} name="domain" id="domain" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                <label htmlFor="type" className="leading-6 text-sm text-gray-600">Domain</label>
+                <select onChange={formik.handleChange} value={formik.values.type} onBlur={formik.handleBlur} name="type" id="type" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                   <option value="user">User</option>
                   <option value="company">Company</option>
                   <option value="admin">Admin</option>
                 </select>
-                {formik.touched.domain && formik.errors.domain ? (<div className="text-red-900"> {formik.errors.domain}</div>) : null}
+                {formik.touched.type && formik.errors.type ? (<div className="text-red-900"> {formik.errors.type}</div>) : null}
               </div>
-              <button className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">Log In</button>
+              <button type="submit" className="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">Log In</button>
               {/* Sign up */}
               <p className="text-xs text-gray-500 mt-3 mb-2 text-center"><i>Not registered?</i></p>
               <div />
@@ -74,8 +74,6 @@ export default function Login() {
             </div>
           </div>
         </section>
-      </div>
-
-    </>
+      </form>
   )
 }

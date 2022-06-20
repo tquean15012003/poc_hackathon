@@ -42,8 +42,8 @@ function App() {
 
         {/*User*/}
         <Route path='/userhome' element={<HomeTemplate Component={UserHome} />} />
-        <Route path='/userprofile' element={<HomeTemplate Component={UserProfile} />} />
-        <Route path='/userrequest' element={<HomeTemplate Component={UserRequest} />} />
+        <Route path='/userprofile/:id' element={<HomeTemplate Component={UserProfile} />} />
+        <Route path='/userrequest/:id' element={<HomeTemplate Component={UserRequest} />} />
 
         {/*Company*/}
         <Route path='/companyhome' element={<CompanyHomeTemplate Component={CompanyHome} />} />
