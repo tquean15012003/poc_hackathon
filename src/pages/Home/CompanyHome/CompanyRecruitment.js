@@ -28,12 +28,13 @@ export default function CompanyRecruitment() {
                 <div>$3500-$4000</div>
               </div>
               <div class="flex justify-center">
-                <a href="/viewApplicants" className="mt-3 text-red-500 inline-flex items-center">View Applications
-                  <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <button onClick={() => { navigate("/companyviewapplicant", { replace: false }) }} className="flex mr-3 space-x-3 items-center px-5 py-2">
+                  <span className="text-red-500 text-sm hover:text-red-800">View Applicants</span>
+                  <svg fill="none" stroke="red" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                     <circle cx={12} cy={7} r={4} />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -46,12 +47,13 @@ export default function CompanyRecruitment() {
                 <div>$4500-$5000</div>
               </div>
               <div class="flex justify-center">
-                <a href="/viewApplicants" className="mt-3 text-red-500 inline-flex items-center">View Applications
-                  <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <button onClick={() => { navigate("/companyviewapplicant", { replace: false }) }} className="flex mr-3 space-x-3 items-center px-5 py-2">
+                  <span className="text-red-500 text-sm hover:text-red-800">View Applicants</span>
+                  <svg fill="none" stroke="red" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                     <circle cx={12} cy={7} r={4} />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -64,12 +66,13 @@ export default function CompanyRecruitment() {
                 <div>$6500-$7000</div>
               </div>
               <div class="flex justify-center">
-                <a href="/viewApplicants" className="mt-3 text-red-500 inline-flex items-center">View Applications
-                  <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <button onClick={() => { navigate("/companyviewapplicant", { replace: false }) }} className="flex mr-3 space-x-3 items-center px-5 py-2">
+                  <span className="text-red-500 text-sm hover:text-red-800">View Applicants</span>
+                  <svg fill="none" stroke="red" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                     <circle cx={12} cy={7} r={4} />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -82,12 +85,13 @@ export default function CompanyRecruitment() {
                 <div>$10500-$11000</div>
               </div>
               <div class="flex justify-center">
-                <a href="/viewApplicants" className="mt-3 text-red-500 inline-flex items-center">View Applications
-                  <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                <button onClick={() => { navigate("/companyviewapplicant", { replace: false }) }} className="flex mr-3 space-x-3 items-center px-5 py-2">
+                  <span className="text-red-500 text-sm hover:text-red-800">View Applicants</span>
+                  <svg fill="none" stroke="red" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
                     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
                     <circle cx={12} cy={7} r={4} />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>
