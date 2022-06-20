@@ -1,17 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 export default function CompanyRecruitment() {
+
+  const { navigate } = useSelector(state => state.NavigateReducer)
+
   return (
     <div>
       {/* add job posting */}
-      <div className="container mx-auto mt-10 mb-0 flex p-5 flex-row items-center">
-        <a href className="flex flex-row mx-auto items-center">
-          <div><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="brown" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg></div>
-          <div><span className="text-xl font-medium title-font text-red-900">Add job post</span></div>
-        </a>
+      <div className="container mx-auto mt-20 mb-0 flex justify-center flex-row items-center">
+        <button onClick={() => { navigate("/companyaddjob", { replace: false }) }} className="flex mr-3 space-x-3 items-center px-5 py-2 bg-red-500 hover:bg-red-800">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="text-white text-sm">Add job post</span>
+        </button>
       </div>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">

@@ -8,6 +8,7 @@ import CompanyManagement from './pages/Home/CompanyHome/CompanyManagement';
 import CompanyProfile from './pages/Home/CompanyHome/CompanyProfile';
 import CompanyRecruitment from './pages/Home/CompanyHome/CompanyRecruitment';
 import CompanyRequest from './pages/Home/CompanyHome/CompanyRequest';
+import CompanyAddJob from './pages/Home/CompanyHome/CompanyAddJob';
 import UserHome from './pages/Home/UserHome/UserHome';
 import UserProfile from './pages/Home/UserHome/UserProfile';
 import UserRequest from './pages/Home/UserHome/UserRequest';
@@ -51,6 +52,7 @@ function App() {
         <Route path='/companyrecruitment' element={<CompanyHomeTemplate Component={CompanyRecruitment} />} />
         <Route path='/companyrequest' element={<CompanyHomeTemplate Component={CompanyRequest} />} />
         <Route path='/companyprofile' element={<CompanyHomeTemplate Component={CompanyProfile} />} />
+        <Route path='/companyaddjob' element={<CompanyHomeTemplate Component={CompanyAddJob} />} />
 
         {/*Admin*/}
         <Route path='/adminhome' element={<AdminHomeTemplate Component={AdminHome} />} />
