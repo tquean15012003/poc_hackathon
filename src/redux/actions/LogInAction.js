@@ -1,10 +1,17 @@
 import { logInService } from "../../services/LogInServices"
+import { DID, TOKEN, USER } from "../../utils/settings/config"
 import { SET_USER } from "../consts/UserConsts"
 
 export const logInInAction = (logInInfo) => {
     return async (dispatch, getState) => {
         try {
             const { data } = await logInService.logInService(logInInfo)
+            localStorage.removeItem(DID)
+            localStorage.removeItem(TOKEN)
+            localStorage.removeItem(USER)
+            localStorage.setItem(DID, data.did)
+            localStorage.setItem(TOKEN, data.accessToken)
+            localStorage.setItem(USER, JSON.stringify(data.user))
             dispatch({
                 type: SET_USER,
                 user: data.user,

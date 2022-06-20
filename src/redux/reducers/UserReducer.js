@@ -1,15 +1,15 @@
+import { DID, TOKEN, USER } from "../../utils/settings/config";
 import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, SET_USER, SET_USER_INFO } from "../consts/UserConsts";
 
 const stateDefault = {
-    user: {
-    },
+    user: JSON.parse(localStorage.getItem(USER)),
     userInfo: {
     },
     userSkill: [],
     userEducation: [],
     userExperience: [],
-    did: "",
-    accessToken: "",
+    did: localStorage.getItem(DID),
+    accessToken: localStorage.getItem(TOKEN),
     companyList: [],
     adminList: []
 };
