@@ -1,5 +1,6 @@
 import { userService } from "../../services/UserService"
-import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, SET_USER_INFO } from "../consts/UserConsts"
+import { DID } from "../../utils/settings/config"
+import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, GET_REQUEST_RECEIVED, GET_REQUEST_SENT, SET_USER_INFO } from "../consts/UserConsts"
 
 export const setUserInfoAction = (userInfo) => ({
     type: SET_USER_INFO,
@@ -7,7 +8,6 @@ export const setUserInfoAction = (userInfo) => ({
 })
 
 export const updateUserInfoAction = (values) => {
-    console.log(values)
     return async (dispatch, getState) => {
         try {
             const { userInfo, user } = getState().UserReducer
@@ -97,7 +97,7 @@ export const deleteEducationAction = (educationID) => {
 export const getCompanyListAction = () => {
     return async (dispatch, getState) => {
         try {
-            const {data} = await userService.getCompanyListService()
+            const { data } = await userService.getCompanyListService()
             dispatch({
                 type: GET_COMPANY_LIST,
                 companyList: data.companyList
@@ -111,11 +111,82 @@ export const getCompanyListAction = () => {
 export const getAdminListAction = () => {
     return async (dispatch, getState) => {
         try {
-            const {data} = await userService.getAdminListService()
+            const { data } = await userService.getAdminListService()
             dispatch({
                 type: GET_ADMIN_LIST,
                 adminList: data.adminList
             })
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
+}
+
+export const createRequestAction = (requestType, values, identity) => {
+    return async (dispatch, getState) => {
+        const { user } = await getState().UserReducer
+        const model = {
+            requestType,
+            holderID: user.id,
+            issuerID: values.issuer,
+            data: JSON.stringify(values),
+            holderDID: localStorage.getItem(DID),
+            identity
+        }
+        try {
+            if (requestType === "infomation") {
+                const { data } = await userService.getRequestListByHolderID(user.id)
+                data.requestList.forEach(async (request) => {
+                    if (request.requestType === "infomation") {
+                        await userService.deleteRequestService(request.id)
+                    }
+                })
+            }
+            await userService.createRequestService(model)
+            await dispatch(getRequestSentAction(user.id))
+
+            if (requestType === "infomation") {
+                await dispatch(updateUserInfoAction({ ...values, claimID: "" }))
+            }
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
+}
+
+export const getRequestReceivedAction = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            const { data } = await userService.getRequestListByIssuerID(id)
+            dispatch({
+                type: GET_REQUEST_RECEIVED,
+                requestReceivedList: data.requestList
+            })
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
+}
+
+export const getRequestSentAction = (id) => {
+    return async (dispatch, getState) => {
+        try {
+            const { data } = await userService.getRequestListByHolderID(id)
+            dispatch({
+                type: GET_REQUEST_SENT,
+                requestSentList: data.requestList
+            })
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
+}
+
+export const rejectRequestAction = (request) => {
+    return async (dispatch, getState) => {
+        try {
+            await userService.rejectRequestService(request.id)
+            dispatch(getRequestReceivedAction(request.issuerID))
         } catch (error) {
             alert(error.response.data.message)
         }

@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { getAdminListAction, getCompanyListAction, getEducationAction, getUserInfoAction } from '../../../redux/actions/UserActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminListAction, getCompanyListAction, getEducationAction, getRequestSentAction, getUserInfoAction } from '../../../redux/actions/UserActions'
 import UserEducation from './UserProfileComponent/UserEducation'
 import UserExperience from './UserProfileComponent/UserExperience'
 import UserInfo from './UserProfileComponent/UserInfo'
@@ -13,13 +12,14 @@ export default function UserProfile() {
 
     const dispatch = useDispatch()
 
-    const { id } = useParams();
+    const { user } = useSelector(state => state.UserReducer);
 
     useEffect(() => {
-        dispatch(getUserInfoAction(id)) 
-        dispatch(getEducationAction(id)) 
+        dispatch(getUserInfoAction(user.id)) 
+        dispatch(getEducationAction(user.id)) 
         dispatch(getCompanyListAction())
         dispatch(getAdminListAction());
+        dispatch(getRequestSentAction(user.id))
     }, [])
 
     return (

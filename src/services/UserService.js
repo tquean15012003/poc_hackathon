@@ -43,6 +43,21 @@ export class UserService extends baseService {
     getAdminListService = () => {
         return this.get("users/getadminlist")
     }
+    createRequestService = (model) => {
+        return this.post("requests", model)
+    }
+    getRequestListByHolderID = (id) => {
+        return this.get(`requests/byholderid/${id}`)
+    }
+    getRequestListByIssuerID = (id) => {
+        return this.get(`requests/byissuerid/${id}`)
+    }
+    deleteRequestService = (id) => {
+        return this.delete(`requests/${id}`)
+    }
+    rejectRequestService = (id) => {
+        return this.put(`requests/rejectrequest/${id}`)
+    }
 }
 
 export const userService = new UserService()

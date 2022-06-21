@@ -1,5 +1,5 @@
 import { DID, TOKEN, USER } from "../../utils/settings/config";
-import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, SET_USER, SET_USER_INFO } from "../consts/UserConsts";
+import { ADD_USER_EDUCATION, DELETE_EDUCATION, GET_ADMIN_LIST, GET_COMPANY_LIST, GET_REQUEST_RECEIVED, GET_REQUEST_SENT, SET_USER, SET_USER_INFO } from "../consts/UserConsts";
 
 const stateDefault = {
     user: JSON.parse(localStorage.getItem(USER)),
@@ -11,7 +11,9 @@ const stateDefault = {
     did: localStorage.getItem(DID),
     accessToken: localStorage.getItem(TOKEN),
     companyList: [],
-    adminList: []
+    adminList: [],
+    requestReceivedList: [],
+    requestSentList: []
 };
 
 export const UserReducer = (state = stateDefault, action) => {
@@ -44,6 +46,14 @@ export const UserReducer = (state = stateDefault, action) => {
         }
         case GET_ADMIN_LIST: {
             state.adminList = action.adminList
+            return {...state}
+        }
+        case GET_REQUEST_RECEIVED: {
+            state.requestReceivedList = action.requestReceivedList;
+            return {...state}
+        }
+        case GET_REQUEST_SENT: {
+            state.requestSentList = action.requestSentList;
             return {...state}
         }
         default: return { ...state };

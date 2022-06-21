@@ -2,11 +2,13 @@ import { useFormik } from 'formik'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup';
-import { updateUserInfoAction } from '../../../../redux/actions/UserActions';
+import { createRequestAction, updateUserInfoAction } from '../../../../redux/actions/UserActions';
 
 export default function UserInfo() {
 
-    const { user, userInfo, adminList } = useSelector(state => state.UserReducer)
+    const { user, userInfo, adminList, requestSentList } = useSelector(state => state.UserReducer)
+    
+    const request = requestSentList.find(request => request.requestType === "infomation")
 
     const dispatch = useDispatch()
 
@@ -16,7 +18,7 @@ export default function UserInfo() {
             name: user.name,
             contact: "",
             location: "",
-            issuer: adminList[0]?.username,
+            issuer: adminList[0]?.id,
         },
         validationSchema: Yup.object({
             name: Yup.string()
@@ -28,8 +30,9 @@ export default function UserInfo() {
             issuer: Yup.string()
                 .required('Required!')
         }),
-        onSubmit: (values) => {
-            dispatch(updateUserInfoAction(values))
+        onSubmit: async (values) => {
+            await dispatch(updateUserInfoAction(values))
+            await dispatch(createRequestAction("infomation", values, userInfo.id))
             formik.setFieldValue("contact", "");
             formik.setFieldValue("location", "");
         }
@@ -75,7 +78,7 @@ export default function UserInfo() {
                             <select onChange={formik.handleChange} value={formik.values.issuer} onBlur={formik.handleBlur} name="issuer" id="issuer" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 {adminList.map((admin, index) => {
                                     return (
-                                        <option value={admin.username} key={index}>{admin.name}</option>
+                                        <option value={admin.id} key={index}>{admin.name}</option>
                                     )
                                 })}
                             </select>
@@ -97,8 +100,8 @@ export default function UserInfo() {
                     <div className="py-8 flex flex-wrap md:flex-nowrap">
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">Basic Information</span>
-                            {userInfo.isverified === "true" ? <span className="text-sm text-green-500">Verified</span> : <span className="text-sm text-yellow-500">Pending review</span>}
-                        </div>
+                            {(typeof(request) === "undefined") ? <span className="text-sm text-yellow-500">Pending Review</span> : request.isdone === "false" ? <span className="text-sm text-yellow-500">Pending Review</span> : request.claimID === "" ? <span className="text-sm text-red-500">Rejected</span> : <span className="text-sm text-green-500">Verified</span> }
+                        </div> 
                         <div className="md:flex-grow">
                             <div className="mb-2">
                                 <h3 className="text-xl font-medium text-gray-900 title-font mb-2">Name</h3>

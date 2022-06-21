@@ -1,7 +1,96 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getRequestReceivedAction, getRequestSentAction, rejectRequestAction } from '../../../redux/actions/UserActions';
+import _ from 'lodash';
 
 export default function UserRequest() {
+
+    const { user, requestReceivedList, requestSentList } = useSelector(state => state.UserReducer);
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getRequestReceivedAction(user.id))
+        dispatch(getRequestSentAction(user.id))
+    }, [])
+
+    const renderRequestHeader = (request) => {
+        return (
+            <h2 className="text-gray-900 text-2xl font-bold title-font mb-2">{_.capitalize(request.requestType)}</h2>
+        )
+    }
+
+    const renderRequestInfo = (request) => {
+        return Object.keys(JSON.parse(request.data)).slice(0, 3).map((item, index) => {
+            return (
+                <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
+            )
+        })
+
+    }
+
+    const renderRequestReceived = () => {
+        return requestReceivedList.map((request, index) => {
+            return (
+                <div className="accordion-body py-4 px-5" key={index}>
+                    <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
+                        <div className="w-3/5 sm:text-left text-center mt-6 sm:mt-0">
+                            {renderRequestHeader(request)}
+                            {renderRequestInfo(request)}
+                        </div>
+                        {request.isdone === "false" ?
+                            <>
+                                <button className="flex space-x-3 mx-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                                <button onClick={() => {
+                                    dispatch(rejectRequestAction(request))
+                                }} className="flex space-x-3 items-center px-5 py-5 bg-red-500 hover:bg-red-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            </> : (request.claimID === "" ?
+                                <button disabled className="flex space-x-3 items-center px-5 py-5 bg-red-500 hover:bg-red-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                                :
+                                <button disabled className="flex space-x-3 mx-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            )}
+                    </div>
+                </div>
+            )
+        })
+    }
+
+    const renderRequestSent = () => {
+        return requestSentList.map((request, index) => {
+            return (
+                <div className="accordion-body py-4 px-5" key={index}>
+                    <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
+                        <div className="w-3/5 sm:text-left text-center mt-6 sm:mt-0">
+                            {renderRequestHeader(request)}
+                            {renderRequestInfo(request)}
+                        </div>
+                        <div>
+                            {request.isdone === "false" ? <h3 className="text-yellow-500">Pending review</h3> : (request.claimID === "" ? <h3 className="text-red-500">Rejected</h3> : <h3 className="text-green-500">Approved</h3>)}
+                        </div>
+                    </div>
+                </div>
+            )
+        })
+    }
+
     return (
         <div>
             <h1 className="mt-10 mb-10 sm:text-3xl text-2xl font-medium title-font text-center text-blue-900">Your Requests </h1>
@@ -13,34 +102,7 @@ export default function UserRequest() {
                         </button>
                     </h2>
                     <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div className="accordion-body py-4 px-5">
-                            <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
-                                <div className="w-3/5 sm:text-left text-center mt-6 sm:mt-0">
-                                    <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Object 1</h2>
-                                    <p className="leading-relaxed text-base">Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit.
-                                        Corrupti molestias illo, illum praesentium tempore obcaecati! Totam alias ducimus
-                                        provident
-                                        cumque aliquid vero, quaerat eveniet aut doloribus, porro nihil asperiores
-                                        exercitationem!</p>
-                                    <a className="mt-3 text-blue-500 inline-flex items-center">View details
-                                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                                <button className="flex space-x-3 mx-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
-                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                    </svg>
-                                </button>
-                                <button className="flex space-x-3 items-center px-5 py-5 bg-red-500 hover:bg-red-800 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
-                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                        {renderRequestReceived()}
                     </div>
                 </div>
                 <div className="accordion-item bg-white border border-gray-200">
@@ -50,27 +112,7 @@ export default function UserRequest() {
                         </button>
                     </h2>
                     <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                        <div className="accordion-body py-4 px-5">
-                            <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
-                                <div className="w-3/5 sm:text-left text-center mt-6 sm:mt-0">
-                                    <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Request 1</h2>
-                                    <p className="leading-relaxed text-base">Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit.
-                                        Corrupti molestias illo, illum praesentium tempore obcaecati! Totam alias ducimus
-                                        provident
-                                        cumque aliquid vero, quaerat eveniet aut doloribus, porro nihil asperiores
-                                        exercitationem!</p>
-                                    <a className="mt-3 text-blue-500 inline-flex items-center">View details
-                                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div>
-                                    <h3>Status</h3>
-                                </div>
-                            </div>
-                        </div>
+                        {renderRequestSent()}
                     </div>
                 </div>
             </div>
