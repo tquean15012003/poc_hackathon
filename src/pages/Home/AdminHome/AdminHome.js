@@ -26,16 +26,19 @@ export default function AdminHome() {
     }
 
     const renderRequestInfo = (request) => {
-        return Object.keys(JSON.parse(request.data)).slice(0, 3).map((item, index) => {
-            return (
-                <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
-            )
+        return Object.keys(JSON.parse(request.data)).map((item, index) => {
+            if (item !== "issuer") {
+                return (
+                    <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
+                )
+            }
+            return (<></>)
         })
 
     }
 
     const renderRequestReceived = () => {
-        return requestReceivedList.map((request, index) => {
+        return requestReceivedList.slice(0).reverse().map((request, index) => {
             return (
                 <div className="accordion-body py-4 px-5" key={index}>
                     <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
@@ -77,7 +80,7 @@ export default function AdminHome() {
     }
 
     const renderRequestSent = () => {
-        return requestSentList.map((request, index) => {
+        return requestSentList.slice(0).reverse().map((request, index) => {
             return (
                 <div className="accordion-body py-4 px-5" key={index}>
                     <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">

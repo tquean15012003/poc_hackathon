@@ -29,13 +29,13 @@ export default function UserRequest() {
                     <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
                 )
             }
-            return (<></>)
+            return (<p key={index}></p>)
         })
 
     }
 
     const renderRequestReceived = () => {
-        return requestReceivedList.map((request, index) => {
+        return requestReceivedList.slice(0).reverse().map((request, index) => {
             return (
                 <div className="accordion-body py-4 px-5" key={index}>
                     <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
@@ -77,7 +77,7 @@ export default function UserRequest() {
     }
 
     const renderRequestSent = () => {
-        return requestSentList.map((request, index) => {
+        return requestSentList.slice(0).reverse().map((request, index) => {
             return (
                 <div className="accordion-body py-4 px-5" key={index}>
                     <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">

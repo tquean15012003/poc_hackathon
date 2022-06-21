@@ -17,11 +17,11 @@ export const updateUserInfoAction = (values) => {
                     userID: user.id,
                     userInfoID: data.userInfo.id
                 })
-                dispatch(setUserInfoAction(data.userInfo))
+                await dispatch(setUserInfoAction(data.userInfo))
             }
             else {
                 const { data } = await userService.updateUserInfoService(userInfo.id, values)
-                dispatch(setUserInfoAction(data.userInfo))
+                await dispatch(setUserInfoAction(data.userInfo))
             }
         } catch (error) {
             alert(error.response.data.message)
@@ -122,9 +122,13 @@ export const getAdminListAction = () => {
     }
 }
 
-export const createRequestAction = (requestType, values, identity) => {
+export const createRequestAction = (requestType, values) => {
     return async (dispatch, getState) => {
-        const { user } = await getState().UserReducer
+        const { user, userInfo } = await getState().UserReducer
+        let identity
+        if (requestType === "infomation") {
+            identity = userInfo.id
+        }
         const model = {
             requestType,
             holderID: user.id,

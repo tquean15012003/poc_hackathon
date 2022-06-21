@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React, { Fragment } from 'react'
 
 export default function UserHome() {
 
@@ -7,8 +7,8 @@ export default function UserHome() {
         const jobs = ["1"];
         return jobs.map((job, index) => {
             return (
-                <>
-                    <div className="container px-5 py-5 mx-auto mt-10" key={index}>
+                <Fragment key={index}>
+                    <div className="container px-5 py-5 mx-auto mt-10">
                         <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
                             <div className="w-3/5 sm:text-left text-center ml-20 mt-6 sm:mt-0">
                                 <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Junior Software Engineer, Gookgle</h2>
@@ -76,7 +76,7 @@ export default function UserHome() {
                             </div>
                         </div>
                     </div>
-                    <div className="container px-5 py-5 mx-auto mt-3" key={index}>
+                    <div className="container px-5 py-5 mx-auto mt-3">
                         <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
                             <div className="w-3/5 sm:text-left text-center ml-20 mt-6 sm:mt-0">
                                 <h2 className="text-gray-900 text-lg title-font font-medium mb-2">AI Engineer, Meta-strat</h2>
@@ -144,7 +144,7 @@ export default function UserHome() {
                             </div>
                         </div>
                     </div>
-                    <div className="container px-5 py-5 mx-auto mt-3" key={index}>
+                    <div className="container px-5 py-5 mx-auto mt-3">
                         <div className="flex items-center lg:w-4/5 mx-auto border-b pb-10 mb-0 border-gray-200 sm:flex-row flex-col">
                             <div className="w-3/5 sm:text-left text-center ml-20 mt-6 sm:mt-0">
                                 <h2 className="text-gray-900 text-lg title-font font-medium mb-2">Delivery Driver, Shopers</h2>
@@ -160,7 +160,7 @@ export default function UserHome() {
                             </div>
 
                             <div className="mx-10 sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-red-100 text-red-500 flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                                 <p>Not Match</p>
@@ -212,7 +212,7 @@ export default function UserHome() {
                             </div>
                         </div>
                     </div>
-                </>
+                </Fragment>
             )
         })
     }

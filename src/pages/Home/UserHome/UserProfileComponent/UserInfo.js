@@ -8,7 +8,9 @@ export default function UserInfo() {
 
     const { user, userInfo, adminList, requestSentList } = useSelector(state => state.UserReducer)
     
-    const request = requestSentList.find(request => request.requestType === "infomation")
+    console.log(requestSentList)
+    
+    const request = requestSentList.slice(0).reverse().find(request => request.requestType === "infomation")
 
     const dispatch = useDispatch()
 
@@ -32,7 +34,7 @@ export default function UserInfo() {
         }),
         onSubmit: async (values) => {
             await dispatch(updateUserInfoAction(values))
-            await dispatch(createRequestAction("infomation", values, userInfo.id))
+            await dispatch(createRequestAction("infomation", values))
             formik.setFieldValue("contact", "");
             formik.setFieldValue("location", "");
         }
