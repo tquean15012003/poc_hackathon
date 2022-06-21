@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logOutAction } from '../../../redux/actions/LogInAction'
 
 export default function HomeHeader() {
+
+  const dispatch = useDispatch()
 
   const { navigate } = useSelector(state => state.NavigateReducer)
 
@@ -36,6 +39,9 @@ export default function HomeHeader() {
               <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" />
             </svg>
             <span className="text-white text-xl">View profile</span>
+          </button>
+          <button onClick={() => { dispatch(logOutAction()) }} className="flex mr-3 space-x-3 items-center px-5 py-2 bg-blue-500 hover:bg-blue-800 rounded-full">
+            <span className="text-white text-xl">Log out</span>
           </button>
         </nav>
       </div>

@@ -38,3 +38,13 @@ export const signUpAction = (signUpInfo) => {
         }
     }
 }
+
+export const logOutAction = () => {
+    return (dispatch, getState) => {
+        localStorage.removeItem(DID)
+        localStorage.removeItem(TOKEN)
+        localStorage.removeItem(USER)
+        const { navigate } = getState().NavigateReducer
+        navigate(`/`, { replace: false })
+    }
+}
