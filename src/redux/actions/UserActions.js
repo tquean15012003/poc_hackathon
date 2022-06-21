@@ -137,7 +137,7 @@ export const createRequestAction = (requestType, values, identity) => {
             if (requestType === "infomation") {
                 const { data } = await userService.getRequestListByHolderID(user.id)
                 data.requestList.forEach(async (request) => {
-                    if (request.requestType === "infomation") {
+                    if (request.requestType === "infomation" && request.isdone === "false") {
                         await userService.deleteRequestService(request.id)
                     }
                 })

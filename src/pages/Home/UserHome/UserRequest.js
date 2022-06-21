@@ -23,10 +23,13 @@ export default function UserRequest() {
     }
 
     const renderRequestInfo = (request) => {
-        return Object.keys(JSON.parse(request.data)).slice(0, 3).map((item, index) => {
-            return (
-                <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
-            )
+        return Object.keys(JSON.parse(request.data)).map((item, index) => {
+            if (item !== "issuer") {
+                return (
+                    <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
+                )
+            }
+            return (<></>)
         })
 
     }
