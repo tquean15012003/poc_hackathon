@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getRequestReceivedAction, getRequestSentAction, rejectRequestAction } from '../../../redux/actions/UserActions';
+import { approvedRequestAction, getRequestReceivedAction, getRequestSentAction, rejectRequestAction } from '../../../redux/actions/UserActions';
 import _ from 'lodash';
 
 export default function AdminHome() {
@@ -32,7 +32,7 @@ export default function AdminHome() {
                     <p className="leading-relaxed text-base" key={index}><span className="font-bold">{_.capitalize(item)}:</span> {JSON.parse(request.data)[item]}</p>
                 )
             }
-            return (<></>)
+            return (<p key={index}></p>)
         })
 
     }
@@ -48,7 +48,9 @@ export default function AdminHome() {
                         </div>
                         {request.isdone === "false" ?
                             <>
-                                <button className="flex space-x-3 mx-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
+                                <button onClick={() => {
+                                    dispatch(approvedRequestAction(request))
+                                }} className="flex space-x-3 mr-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
                                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                     </svg>
@@ -67,11 +69,13 @@ export default function AdminHome() {
                                     </svg>
                                 </button>
                                 :
-                                <button disabled className="flex space-x-3 mx-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
-                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                    </svg>
-                                </button>
+                                <a target="_blank" href={request.link} rel="noreferrer">
+                                    <button className="flex space-x-3 items-center px-5 py-5 bg-green-500 hover:bg-green-800 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="white">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </a>
                             )}
                     </div>
                 </div>
@@ -89,7 +93,7 @@ export default function AdminHome() {
                             {renderRequestInfo(request)}
                         </div>
                         <div>
-                            {request.isdone === "false" ? <h3 className="text-yellow-500">Pending review</h3> : (request.claimID === "" ? <h3 className="text-red-500">Rejected</h3> : <h3 className="text-green-500">Approved</h3>)}
+                            {request.isdone === "false" ? <h3 className="text-yellow-500">Pending review</h3> : (request.claimID === "" ? <h3 className="text-red-500">Rejected</h3> : <a href={request.link} target="_blank" className="text-green-500" rel="noreferrer">Approved</a>)}
                         </div>
                     </div>
                 </div>

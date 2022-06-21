@@ -3,28 +3,56 @@ import { useFormik } from 'formik'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup';
-import { addUserEducationAction, deleteEducationAction } from '../../../../redux/actions/UserActions';
+import { addUserEducationAction, createRequestAction, deleteEducationAction } from '../../../../redux/actions/UserActions';
 
 export default function UserEducation() {
 
-    const { userEducation, companyList } = useSelector(state => state.UserReducer)
+    const { userEducation, companyList, requestSentList } = useSelector(state => state.UserReducer)
+
+    const educationRequestList = requestSentList.filter(request => request.requestType === "education")
 
     const dispatch = useDispatch()
 
+    const renderStatus = (education) => {
+        let index = educationRequestList.findIndex(request => Number(request.identity) === education.id)
+        if (index === -1) {
+            return (
+                <span className="text-sm text-yellow-500">Pending review</span>
+            )
+        } else {
+            if (educationRequestList[index].isdone === "false") {
+                return (
+                    <span className="text-sm text-yellow-500">Pending review</span>
+                )
+            } else {
+                if (educationRequestList[index].claimID === "") {
+                    return (
+                        <span className="text-sm text-red-500">Rejected</span>
+                    )
+                }
+                else {
+                    return (
+                        <a href={educationRequestList[index].link} target="_blank" className="text-sm text-green-500" rel="noreferrer">Verified</a>
+                    )
+                }
+            }
+        }
+    }
+
     const renderEducation = () => {
-        return userEducation.map((education, index) => {
+        return userEducation.slice(0).reverse().map((education, index) => {
             return (
                 <div className="-my-8 divide-y-2 divide-gray-100" key={index}>
                     <div className="py-8 flex flex-wrap md:flex-nowrap">
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">{education?.level}</span>
-                            {(education.claimID === "" || typeof education.claimID === "undefined" )? <span className="text-sm text-yellow-500">Pending review</span> : <span className="text-sm text-green-500">Verified</span>}
+                            {renderStatus(education)}
                         </div>
                         <div className="md:flex-grow">
                             <h2 className="text-2xl font-medium text-gray-900 title-font mb-2">{education?.name}</h2>
                             <p className="leading-relaxed">{education?.description}</p>
                             <a onClick={() => {
-                                if (window.confirm("Are you sure to delete?")){
+                                if (window.confirm("Are you sure to delete?")) {
                                     dispatch(deleteEducationAction(education?.id))
                                 }
                             }} className="cursor-pointer text-red-500 inline-flex items-center mt-4">Delete<span className="text-xl">X</span>
@@ -42,7 +70,7 @@ export default function UserEducation() {
             level: "",
             name: "",
             description: "",
-            issuer: companyList[0]?.username,
+            issuer: companyList[0]?.id,
         }
         ,
         validationSchema: Yup.object({
@@ -55,9 +83,9 @@ export default function UserEducation() {
             issuer: Yup.string()
                 .required('Required!')
         }),
-        onSubmit: (values) => {
-            console.log(values)
-            dispatch(addUserEducationAction(values))
+        onSubmit: async (values) => {
+            await dispatch(addUserEducationAction(values))
+            await dispatch(createRequestAction("education", values))
             formik.setFieldValue("level", "");
             formik.setFieldValue("name", "");
             formik.setFieldValue("description", "");
@@ -102,8 +130,8 @@ export default function UserEducation() {
                                 <label htmlFor="issuer" className="leading-7 text-sm text-gray-600">Issuer</label>
                                 <select onChange={formik.handleChange} value={formik.values.issuer} onBlur={formik.handleBlur} name="issuer" id="issuer" className="w-full bg-white rounded border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                     {companyList.map((company, index) => {
-                                        return(
-                                        <option value={company.username} key={index}>{company.name}</option>
+                                        return (
+                                            <option value={company.id} key={index}>{company.name}</option>
                                         )
                                     })}
                                 </select>

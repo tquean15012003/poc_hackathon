@@ -7,9 +7,7 @@ import { createRequestAction, updateUserInfoAction } from '../../../../redux/act
 export default function UserInfo() {
 
     const { user, userInfo, adminList, requestSentList } = useSelector(state => state.UserReducer)
-    
-    console.log(requestSentList)
-    
+        
     const request = requestSentList.slice(0).reverse().find(request => request.requestType === "infomation")
 
     const dispatch = useDispatch()
@@ -102,7 +100,7 @@ export default function UserInfo() {
                     <div className="py-8 flex flex-wrap md:flex-nowrap">
                         <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                             <span className="font-semibold title-font text-gray-700">Basic Information</span>
-                            {(typeof(request) === "undefined") ? <span className="text-sm text-yellow-500">Pending Review</span> : request.isdone === "false" ? <span className="text-sm text-yellow-500">Pending Review</span> : request.claimID === "" ? <span className="text-sm text-red-500">Rejected</span> : <span className="text-sm text-green-500">Verified</span> }
+                            {(typeof(request) === "undefined") ? <span className="text-sm text-yellow-500">Pending Review</span> : request.isdone === "false" ? <span className="text-sm text-yellow-500">Pending Review</span> : request.claimID === "" ? <span className="text-sm text-red-500">Rejected</span> : <a href={request.link} target="_blank" className="text-sm text-green-500" rel="noreferrer">Verified</a> }
                         </div> 
                         <div className="md:flex-grow">
                             <div className="mb-2">

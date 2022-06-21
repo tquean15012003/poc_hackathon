@@ -88,6 +88,8 @@ export const deleteEducationAction = (educationID) => {
                 type: DELETE_EDUCATION,
                 educationID
             })
+            
+            alert("Delete successfully!")
         } catch (error) {
             alert(error.response.data.message)
         }
@@ -124,10 +126,13 @@ export const getAdminListAction = () => {
 
 export const createRequestAction = (requestType, values) => {
     return async (dispatch, getState) => {
-        const { user, userInfo } = await getState().UserReducer
+        const { user, userInfo, userEducation } = await getState().UserReducer
         let identity
         if (requestType === "infomation") {
             identity = userInfo.id
+        }
+        if (requestType === "education"){
+            identity = userEducation[Number(userEducation.length) - 1].id
         }
         const model = {
             requestType,
@@ -190,7 +195,37 @@ export const rejectRequestAction = (request) => {
     return async (dispatch, getState) => {
         try {
             await userService.rejectRequestService(request.id)
-            dispatch(getRequestReceivedAction(request.issuerID))
+            await dispatch(getRequestReceivedAction(request.issuerID))
+            alert("Reject successfully!")
+        } catch (error) {
+            alert(error.response.data.message)
+        }
+    }
+}
+
+export const approvedRequestAction = (request) => {
+    return async (dispatch, getState) => {
+        const { user } = getState().UserReducer
+        const newRequest = {...request, issuerName: user.name}
+        try {
+            const response = await userService.buildUnsignedVCService(newRequest)
+            const response_2 = await userService.signVCService({"unsignedCredential": response.data.unsignedCredential})
+            const response_3 = await userService.storeVCService({"data": [response_2.data.signedCredential]})
+            const response_4 = await userService.shareVCService({id: response_3.data.credentialIds[0]})
+            const data = {
+                id: request.id,
+                claimID: response_3.data.credentialIds[0],
+                sharingUrl: response_4.data.sharingUrl
+            }
+            const response_5 = await userService.approveRequestService(data)
+            if (request.requestType === "information"){
+                await userService.updateClaimIDUserInfoService(response_5.data.request.identity,response_5.data.request)
+            }
+            if (request.requestType === "education"){
+                await userService.updateClaimIDEducationService(response_5.data.request.identity,response_5.data.request)
+            }
+            await dispatch(getRequestReceivedAction(request.issuerID))
+            alert("Approve successfully!")
         } catch (error) {
             alert(error.response.data.message)
         }

@@ -58,6 +58,27 @@ export class UserService extends baseService {
     rejectRequestService = (id) => {
         return this.put(`requests/rejectrequest/${id}`)
     }
+    buildUnsignedVCService = (model) => {
+        return this.post("requests/buildunsignedvc", model)
+    }
+    signVCService = (model) => {
+        return this.post("requests/signvc", model)
+    }
+    storeVCService = (model) => {
+        return this.post("requests/storevc", model)
+    }
+    shareVCService = (model) => {
+        return this.post("requests/sharevc", model)
+    }
+    approveRequestService = (model) => {
+        return this.put('/requests/approverequest', model)
+    }
+    updateClaimIDUserInfoService = (id, model) => {
+        return this.put(`/userinfos/updateclaimid/${id}`, model)
+    }
+    updateClaimIDEducationService = (id, model) => {
+        return this.put(`/educations/updateclaimid/${id}`, model)
+    }
 }
 
 export const userService = new UserService()
