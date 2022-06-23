@@ -46,5 +46,6 @@ export const logOutAction = () => {
         localStorage.removeItem(USER)
         const { navigate } = getState().NavigateReducer
         navigate(`/`, { replace: false })
+        window.location.reload();
     }
 }
